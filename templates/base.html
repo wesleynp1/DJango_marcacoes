@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/estiloBase.css" %}" rel="stylesheet">
+    <title>WNP - {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1 class="text-center">Wellcome to my Python site</h1>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer> <p class="text-center">Desenvolvido por Wesley Natan Pereira para fins acadêmicos</p> </footer>
+</body>
+<script src={% static "js/inputPreco.js" %}></script>
+<script src="{% static "bootstrap/js/bootstrap.bundle.js" %}"></script>
+
+</html>

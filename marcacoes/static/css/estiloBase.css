@@ -1,0 +1,14 @@
+:root{
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(50, 50, 50, 0.2));
+    --bs-body-bg: rgb(0, 0, 0);
+    --bs-body-color: rgb(255, 255, 255);
+    --bs-secondary-color: rgb(200,200,200)
+}
+body{
+    background-color: #000000;
+    color: #cbcbcb;
+}
+
+th,td{
+    text-align: center;
+}
