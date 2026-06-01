@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}
+    Exercicio Python
+{% endblock%}
+
+{% block content %}
+    <h2 class="text-center">Exercício Python - Clientes</h2>
+
+    <table  class="table table-dark">
+        <thead>
+            <tr>
+                <th>CPF*</th>
+                <th>NOME</th>
+                <th>TELEFONE</th>
+                <th>DELETE</th>
+                <th>EDITAR</th>
+            </tr>
+
+        <tbody>
+                {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente.cpf }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.telefone }}</td>
+                        <td> <a href="{% url 'clientes:delete' cliente.cpf %}" class="btn btn-danger">DELETE</a> </td>
+                        <td> <a href="{% url 'clientes:edit' cliente.cpf %}" class="btn btn-primary">EDITAR</a> </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5"> <a href="{%  url 'clientes:add' %}"> NOVO CLIENTE </a> </td>
+                </tr>
+            </tbody>
+        </thead>
+    </table>
+
+    <p class="text-start m-4">
+        <a href="{% url 'index' %}">Marcações</a>
+    </p>
+{% endblock %}

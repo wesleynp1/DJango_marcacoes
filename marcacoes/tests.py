@@ -1,5 +1,6 @@
 from django.test import TestCase
-from .models import Cliente, Marcacao
+from .models import  Marcacao
+from clientes.models import Cliente
 from datetime import datetime
 from django.urls import reverse
 

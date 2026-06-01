@@ -23,5 +23,6 @@ from marcacoes import views as marcacoes_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",marcacoes_views.index, name="index"),
-    path("marcacoes/",include("marcacoes.urls"))
+    path("marcacoes/",include("marcacoes.urls")),
+    path("clientes/" ,include("clientes.urls"))
 ]

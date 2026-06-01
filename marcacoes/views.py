@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 
-from marcacoes.models import Cliente, Marcacao
+from marcacoes.models import  Marcacao
+from clientes.models import Cliente
 
 # Create your views here.
 def index(request):

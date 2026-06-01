@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+    Exercicio Python - DELETE!
+{% endblock%}
+
+{% block content %}
+    <h2 class="text-center">Atenção! você esta prestes a deletar o cliente</h2>
+
+    <form action="{% url 'clientes:delete' cliente.cpf %}" method="post" class="form-control mb-3">
+        {% csrf_token %}
+
+        <p class="text-center">Cliente {{ cliente.nome }} com CPF: {{ cliente.cpf }}</p>
+
+        <div class="d-flex justify-content-evenly">
+            <input type="submit" value="DELETAR" class="btn btn-danger">
+        </div>
+    </form>
+
+    <a href="{% url 'clientes:index' %}" class="btn btn-primary"><< VOLTAR</a>
+{% endblock %}
