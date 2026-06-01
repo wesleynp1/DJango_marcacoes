@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}
+    Exercicio Python - DELETE!
+{% endblock%}
+
+{% block content %}
+    <h2 class="text-center">Atenção! você esta prestes a deletar uma marcação</h2>
+
+
+
+    <form action="{% url 'marcacoes:delete' marcacao.id %}" method="post" class="form-control mb-3">
+        {% csrf_token %}
+
+        <p class="text-center">Cliente {{ marcacao.cliente.nome }} marcado em {{ marcacao.datahora }}</p>
+
+        <div class="d-flex justify-content-evenly">
+            <input type="submit" value="DELETAR" class="btn btn-danger">
+        </div>
+    </form>
+
+    <a href="{% url 'index' %}" class="btn btn-primary"><< VOLTAR</a>
+    {{ teste }}
+{% endblock %}

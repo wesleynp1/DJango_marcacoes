@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}
+    Exercicio Python
+{% endblock%}
+
+{% block content %}
+    <h2 class="text-center">Exercício Python - Marcações</h2>
+
+    <form action="{% url 'marcacoes:edit' marcacao.id %}" method="post" class="form-control bg-dark">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label" for="cliente">Cliente</label>
+            <select name="cliente"  class="form-select form-control" id="cliente" required>
+                <option>LIVRE</option>
+                {% for cliente in clientes %}
+                    {% if marcacao.cliente == cliente %}
+                        <option value="{{ cliente.cpf }}" selected> {{ cliente.nome }} </option>
+                    {% else %}
+                        <option value="{{ cliente.cpf }}"> {{ cliente.nome }} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="data">Data</label>
+            <input type="date"
+                   name="data"
+                   id="data"
+                   min="{{ agora|date:'Y-m-d' }}"
+                   class="form-control"
+                   value="{{ marcacao.data }}"
+                   >
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for='hora'>Hora</label>
+            <input type="time"
+                   name="hora"
+                   id="hora"
+                   class="form-control"
+                   value="{{ marcacao.hora }}"
+                   >
+        </div>
+
+        <div class="d-flex justify-content-evenly">
+            <input type="submit" value="REGISTRAR" class="btn btn-primary">
+        </div>
+    </form>
+
+    <a href="{% url 'index' %}" class="btn btn-primary"><< VOLTAR</a>
+{% endblock %}
