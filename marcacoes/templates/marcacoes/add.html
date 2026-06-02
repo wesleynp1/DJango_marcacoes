@@ -6,12 +6,12 @@
 {% block content %}
     <h2 class="text-center">Exercício Python - Marcações</h2>
 
-    <form action="{% url 'marcacoes:add' %}" method="post" class="form-control bg-dark">
+    <form action="{% url 'marcacoes:add' %}" method="post">
         {% csrf_token %}
 
         <div class="mb-3">
             <label class="form-label" for="cliente">Cliente</label>
-            <select name="cliente"  class="form-select form-control" id="cliente" required>
+            <select name="cliente"  class="form-select" id="cliente" required>
                 {% for cliente in clientes %}
                 <option value="{{ cliente.cpf }}">{{ cliente.nome }}</option>
                 {% endfor %}

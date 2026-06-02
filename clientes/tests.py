@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.shortcuts import reverse
 from .models import Cliente
 from marcacoes.models import Marcacao
+from django.contrib import auth
 
 # Create your tests here.
 class testClientes(TestCase):
@@ -11,6 +12,9 @@ class testClientes(TestCase):
         c2 = Cliente.objects.create(cpf='15365445911', nome='Bob', telefone='21978415327')
         Marcacao.objects.create(cliente=c1,datahora= datetime(2025,1,20,15,30,00))
         Marcacao.objects.create(cliente=c2, datahora=datetime(2026, 3, 25, 16, 35, 00))
+
+        user = auth.models.User.objects.create_user("teste", "teste@testando.com", "12345678")
+        self.client.force_login(user)
 
     def test_index(self):
         resposta = self.client.get(reverse("index"))

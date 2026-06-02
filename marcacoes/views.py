@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
 
@@ -5,6 +6,7 @@ from marcacoes.models import  Marcacao
 from clientes.models import Cliente
 
 # Create your views here.
+@login_required
 def index(request):
     marcacoes = Marcacao.objects.all().order_by("-datahora")
 
@@ -26,6 +28,7 @@ def index(request):
         }
     )
 
+@login_required
 def add_marcacoes(request):
     if request.method == 'GET':
         pass
@@ -48,6 +51,7 @@ def add_marcacoes(request):
         }
     )
 
+@login_required
 def delete_marcacao(request, id : int):
     marcacao = Marcacao.objects.get(id=id)
 
@@ -61,6 +65,7 @@ def delete_marcacao(request, id : int):
             {"marcacao":marcacao}
         )
 
+@login_required
 def edit_marcacao(request, id : int):
     if request.method == 'GET':
         marcacoes = Marcacao.objects.get(id=id)

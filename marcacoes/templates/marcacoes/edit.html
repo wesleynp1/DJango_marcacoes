@@ -6,7 +6,7 @@
 {% block content %}
     <h2 class="text-center">Exercício Python - Marcações</h2>
 
-    <form action="{% url 'marcacoes:edit' marcacao.id %}" method="post" class="form-control bg-dark">
+    <form action="{% url 'marcacoes:edit' marcacao.id %}" method="post">
         {% csrf_token %}
 
         <div class="mb-3">

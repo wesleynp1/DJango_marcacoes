@@ -1,12 +1,14 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from .models import Cliente
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def index(request):
     clientes = Cliente.objects.all()
     return render(request,"clientes/index.html",{"clientes":clientes})
 
+@login_required
 def add_cliente(request):
     if request.method == "GET":
         return render(request,"clientes/add.html")
@@ -16,7 +18,7 @@ def add_cliente(request):
     else:
         raise Http404
 
-
+@login_required
 def delete_clientes(request,cpf : str):
     if request.method == "GET":
         cliente = Cliente.objects.get(cpf=cpf)
@@ -27,7 +29,7 @@ def delete_clientes(request,cpf : str):
     else:
         raise Http404
 
-
+@login_required
 def edit_clientes(request, cpf : str):
     if request.method == "GET":
         cliente = Cliente.objects.get(cpf=cpf)

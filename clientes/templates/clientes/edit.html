@@ -6,12 +6,12 @@
 {% block content %}
     <h2 class="text-center">Exercício Python - Clientes</h2>
 
-    <form action="{% url 'clientes:edit'  cliente.cpf %}" method="post" class="form-control">
+    <form action="{% url 'clientes:edit'  cliente.cpf %}" method="post">
         {% csrf_token %}
 
         <div class="mb-3">
             <label class="form-label" for="cpf">CPF</label>
-            <input type="text" name="cpf" value="{{ cliente.cpf }}"  class="form-control" id="cpf" maxlength="11" disabled>
+            <input type="text" name="cpf" value="{{ cliente.cpf }}"  class="form-control-plaintext" id="cpf" maxlength="11" disabled>
         </div>
 
         <div class="mb-3">

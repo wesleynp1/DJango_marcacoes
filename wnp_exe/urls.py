@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-import marcacoes
 from marcacoes import views as marcacoes_views
+from wnp_exe import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",marcacoes_views.index, name="index"),
     path("marcacoes/",include("marcacoes.urls")),
-    path("clientes/" ,include("clientes.urls"))
+    path("clientes/" ,include("clientes.urls")),
+    path("login", views.login, name="login"),
+    path("logout", views.logout, name="logout"),
 ]
