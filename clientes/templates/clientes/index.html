@@ -15,6 +15,7 @@
                 <th>DELETE</th>
                 <th>EDITAR</th>
             </tr>
+        </thead>
 
         <tbody>
                 {% for cliente in clientes %}
@@ -30,7 +31,6 @@
                     <td colspan="5"> <a href="{%  url 'clientes:add' %}"> NOVO CLIENTE </a> </td>
                 </tr>
             </tbody>
-        </thead>
     </table>
 
     <p class="text-start m-4">

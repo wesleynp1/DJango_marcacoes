@@ -15,29 +15,28 @@
                 <th>DELETE</th>
                 <th>EDITAR</th>
             </tr>
-
-        <tbody>
-                {% for marcacao in marcacoes %}
-                    <tr>
-                        <td>{{ marcacao.data }}</td>
-                        <td>{{ marcacao.hora }}</td>
-                        {% if marcacao.cliente %}
-                            <td>{{ marcacao.cliente.nome }}</td>
-                        {% else %}
-                            <td>LIVRE</td>
-                        {% endif %}
-                        <td> <a href="{% url 'marcacoes:delete' marcacao.id %}" class="btn btn-danger">DELETE</a> </td>
-                        <td> <a href="{% url 'marcacoes:edit' marcacao.id %}" class="btn btn-primary">EDITAR</a> </td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="5"> <a href="{%  url 'marcacoes:add' %}"> NOVA MARCAÇÃO </a> </td>
-                </tr>
-            </tbody>
         </thead>
+        <tbody>
+            {% for marcacao in marcacoes %}
+                <tr>
+                    <td>{{ marcacao.data }}</td>
+                    <td>{{ marcacao.hora }}</td>
+                    {% if marcacao.cliente %}
+                        <td>{{ marcacao.cliente.nome }}</td>
+                    {% else %}
+                        <td>LIVRE</td>
+                    {% endif %}
+                    <td> <a href="{% url 'marcacoes:delete' marcacao.id %}" class="btn btn-danger">DELETE</a> </td>
+                    <td> <a href="{% url 'marcacoes:edit' marcacao.id %}" class="btn btn-primary">EDITAR</a> </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5"> <a href="{%  url 'marcacoes:add' %}"> NOVA MARCAÇÃO </a> </td>
+            </tr>
+        </tbody>
     </table>
 
-<p class="text-end m-4">
-    <a href="{% url 'clientes:index' %}">Clientes</a>
-</p>
+    <p class="text-end m-4">
+        <a href="{% url 'clientes:index' %}">Clientes</a>
+    </p>
 {% endblock %}

@@ -57,24 +57,26 @@ class TestMarcacao(TestCase):
         self.assertEqual(cliente.nome, "Ana")
 
     def test_marcacao_delete(self):
-        resposta = self.client.get(reverse("marcacoes:delete",kwargs={"id":1}))
+        marcacao = Marcacao.objects.all()[0]
+        resposta = self.client.get( reverse("marcacoes:delete",kwargs={"id": marcacao.id}) )
         self.assertEqual(resposta.status_code, 200)
 
-        resposta = self.client.post(reverse("marcacoes:delete",kwargs={"id":1}))
+        resposta = self.client.post( reverse("marcacoes:delete",kwargs={"id": marcacao.id}) )
 
         self.assertEqual(Marcacao.objects.filter(id=1).count(),0)
         self.assertEqual(resposta.status_code,302)
 
     def test_marcacao_edit(self):
-        resposta = self.client.get(reverse("marcacoes:edit",kwargs={"id":1}))
+        marcacao = Marcacao.objects.all()[0]
+        resposta = self.client.get(reverse("marcacoes:edit",kwargs={"id":marcacao.id}))
         self.assertEqual(resposta.status_code, 200)
         dados = {
             "data" : "2026-08-03",
             "hora" : "15:00",
             "cliente" : "15365445911"
         }
-        resposta = self.client.post(reverse("marcacoes:edit",kwargs={"id":1}),dados)
+        resposta = self.client.post(reverse("marcacoes:edit",kwargs={"id":marcacao.id}),dados)
         self.assertEqual(resposta.status_code, 302)
 
-        marcacao_editada = Marcacao.objects.get(id=1)
+        marcacao_editada = Marcacao.objects.get(id=marcacao.id)
         marcacao_editada.cliente.cpf = dados["cliente"]
