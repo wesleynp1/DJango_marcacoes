@@ -26,14 +26,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o9!kxjrb50^5=be2i(01xcmjd8a60l(a-#h%efozcsxw0)fw*k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,12 +82,12 @@ WSGI_APPLICATION = 'wnp_exe.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DJANGO_DATABASE_NAME'),
-        'USER': os.getenv('DJANGO_DATABASE_USER'),
+        'ENGINE':   'django.db.backends.postgresql',
+        'NAME':     os.getenv('DJANGO_DATABASE_NAME'),
+        'USER':     os.getenv('DJANGO_DATABASE_USER'),
         'PASSWORD': os.getenv('DJANGO_DATABASE_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'HOST':     os.getenv('DJANGO_DATABASE_HOST'),
+        'PORT':     os.getenv('DJANGO_DATABASE_PORT')
     }
 }
 
@@ -114,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-BR'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -126,11 +128,17 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-#Necessário para indicar onde esta a pasta statica
-STATIC_ROOT = BASE_DIR / 'static'
-
 STATIC_DIRS = [
     BASE_DIR / "static",
 ]
 
 LOGIN_URL = "/login"
+
+#Configurações do whitenoise
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
