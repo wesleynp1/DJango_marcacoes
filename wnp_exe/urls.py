@@ -27,4 +27,5 @@ urlpatterns = [
     path("clientes/" ,include("clientes.urls")),
     path("login", views.login, name="login"),
     path("logout", views.logout, name="logout"),
+    path("servicos/",include("servicos.urls"))
 ]

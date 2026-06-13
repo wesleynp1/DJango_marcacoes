@@ -13,7 +13,19 @@
             <label class="form-label" for="cliente">Cliente</label>
             <select name="cliente"  class="form-select" id="cliente" required>
                 {% for cliente in clientes %}
-                <option value="{{ cliente.cpf }}">{{ cliente.nome }}</option>
+                    <option value="{{ cliente.cpf }}">{{ cliente.nome }}</option>
+                {% endfor %}
+                <optgroup label="">
+                    <option value="LIVRE">LIVRE</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="servico">Serviço</label>
+            <select name="servico" class="form-select" id="servico">
+                {% for servico in servicos %}
+                    <option value="{{ servico.id }}">{{ servico.nome }}</option>
                 {% endfor %}
             </select>
         </div>

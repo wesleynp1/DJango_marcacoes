@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o9!kxjrb50^5=be2i(01xcmjd8a60l(a-#h%efozcsxw0)fw*k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'marcacoes.apps.MarcacoesConfig',
     'clientes.apps.ClientesConfig',
+    'servicos.apps.ServicosConfig'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'wnp_exe.wsgi.application'
+ASGI_APPLICATION = 'wnp_exe.asgi.application'
 
 
 # Database
@@ -116,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-BR'
 
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = os.getenv("TIME_ZONE")
 
 USE_I18N = True
 

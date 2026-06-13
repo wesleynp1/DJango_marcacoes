@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}
+    Exercicio Python
+{% endblock%}
+
+{% block content %}
+    <h2 class="text-center">Exercício Python - Serviços</h2>
+
+    <table  class="table table-dark">
+        <thead>
+            <tr>
+                <th>NOME</th>
+                <th>DURAÇÃO</th>
+                <th>DESCRIÇÃO</th>
+                <th>DELETE</th>
+                <th>EDITAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for servico in servicos %}
+                <tr>
+                    <td>{{ servico.nome }}</td>
+                    <td>{{ servico.duracao }}</td>
+                    <td>{{ servico.descricao }}</td>
+                    <td> <a href="{% url 'servicos:delete' servico.id %}" class="btn btn-danger" >DELETE</a> </td>
+                    <td> <a href="{% url 'servicos:edit'   servico.id %}" class="btn btn-primary">EDITAR</a> </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5"> <a href="{%  url 'servicos:add' %}"> NOVO SERVIÇO </a> </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="text-end m-4">
+        <a href="{% url 'clientes:index' %}">Clientes</a>
+    </p>
+    <p class="text-end m-4">
+        <a href="{% url 'index' %}">Marcacoes</a>
+    </p>
+{% endblock %}

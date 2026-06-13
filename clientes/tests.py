@@ -1,6 +1,9 @@
 from datetime import datetime
 from django.test import TestCase
 from django.shortcuts import reverse
+from django.utils import timezone
+
+from servicos.models import Servico
 from .models import Cliente
 from marcacoes.models import Marcacao
 from django.contrib import auth
@@ -10,8 +13,21 @@ class testClientes(TestCase):
     def setUp(self):
         c1 = Cliente.objects.create(cpf='12345678910', nome='Ana', telefone='21987451236')
         c2 = Cliente.objects.create(cpf='15365445911', nome='Bob', telefone='21978415327')
-        Marcacao.objects.create(cliente=c1,datahora= datetime(2025,1,20,15,30,00))
-        Marcacao.objects.create(cliente=c2, datahora=datetime(2026, 3, 25, 16, 35, 00))
+
+        s1 = Servico.objects.create( nome='Servico A', duracao=40, descricao="Um bom serviço" )
+        s2 = Servico.objects.create( nome='Servico B', duracao=60, descricao="Um excelente serviço")
+
+        Marcacao.objects.create(
+            cliente=c1,
+            datahora= timezone.make_aware(datetime(2025,1,20,15,30,00)),
+            servico=s1
+        )
+
+        Marcacao.objects.create(
+            cliente=c2,
+            datahora=timezone.make_aware(datetime(2026, 3, 25, 16, 35, 00)),
+            servico=s2
+        )
 
         user = auth.models.User.objects.create_user("teste", "teste@testando.com", "12345678")
         self.client.force_login(user)
