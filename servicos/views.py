@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Servico
+from .forms  import ServicoForm
 
 
 def index(request):
@@ -7,20 +8,31 @@ def index(request):
 
 
 def add_servico(request):
-    if request.method == "GET":
-        return render(request,"servicos/add.html")
-    elif request.method == "POST":
+    mensagem = ''
 
-        #toda validação necessária
+    if request.method == "POST":
+        formulario = ServicoForm(request.POST)
 
-        Servico.objects.create(
-            nome = request.POST["nome"],
-            duracao = request.POST["duracao"],
-            descricao = request.POST["descricao"]
-        )
+        if formulario.is_valid():
+            Servico.objects.create(
+                nome      = formulario.cleaned_data["nome"],
+                duracao   = formulario.cleaned_data["duracao"],
+                descricao = formulario.cleaned_data["descricao"]
+            )
 
-        return redirect('servicos:index')
-        
+            return redirect('servicos:index')
+        else:
+            mensagem = "Erro de Preenchimento!"
+
+    return render(
+        request,
+        "servicos/add.html",
+        {
+            "form": ServicoForm(),
+            "mensagem": mensagem
+        }
+    )
+
 def edit_servico(request, id : int):
     if request.method == "GET":        
         return render(request,"servicos/edit.html", { "servico": Servico.objects.get(id=id)})

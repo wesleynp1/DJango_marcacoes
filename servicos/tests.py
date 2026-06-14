@@ -31,6 +31,19 @@ class TesteServicos(TestCase):
         self.assertEqual(resposta.status_code, 302)
         self.assertGreater(Servico.objects.filter(nome=dados["nome"]).count(), 0)
 
+    def test_servico_criar_muito_curto(self):
+
+        dados = {
+            "nome": "Testar app",
+            "duracao": 10,
+            "descricao": "Vê se ta funcionando"
+        }
+
+        resposta = self.client.post(reverse("servicos:add"),dados)
+        self.assertEqual(resposta.status_code,200)
+        self.assertContains(resposta,"Erro de Preenchimento!")
+
+
     def test_servico_edit(self):
         s1 = Servico.objects.first()
 

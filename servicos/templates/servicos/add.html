@@ -9,25 +9,14 @@
     <form action="{% url 'servicos:add' %}" method="post">
         {% csrf_token %}
 
-        <div class="mb-3">
-            <label class="form-label" for="nome">Nome do Serviço</label>
-            <input type="text" name="nome" id="nome">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for="duracao">Duração(em minutos)</label>
-            <input type="number" name="duracao" id="duracao">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for="descricao">Descrição</label>
-            <input type="text" name="descricao" id="descricao" placeholder="Dica: seja breve...">
-        </div>
+        {{ form }}
 
         <div class="d-flex justify-content-evenly">
             <input type="submit" value="REGISTRAR" class="btn btn-primary">
         </div>
     </form>
+
+    <p class="text-danger text-center">{{ mensagem }}</p>
 
     <a onclick="history.back()" class="btn btn-primary">VOLTAR</a>
 {% endblock %}
