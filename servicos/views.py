@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Servico
 from .forms  import ServicoForm
 
 
 def index(request):
-    return render(request, "servicos/index.html", {"servicos": Servico.objects.all()})
-
+    return render(
+        request,
+        "servicos/index.html",
+        {"servicos": Servico.objects.all()})
 
 def add_servico(request):
     mensagem = ''
@@ -28,29 +30,50 @@ def add_servico(request):
         request,
         "servicos/add.html",
         {
+            "acao" : "add",
             "form": ServicoForm(),
             "mensagem": mensagem
         }
     )
 
 def edit_servico(request, id : int):
-    if request.method == "GET":        
-        return render(request,"servicos/edit.html", { "servico": Servico.objects.get(id=id)})
-    elif request.method == "POST":
-        servico = Servico.objects.get(id=id)
-        
-        servico.nome      = request.POST["nome"]
-        servico.duracao   = int(request.POST["duracao"])
-        servico.descricao = request.POST["descricao"]
+    servico = get_object_or_404(Servico, id=id)
+    mensagem = ""
 
-        servico.save()
+    if request.method == "POST":
+        formulario = ServicoForm(request.POST,instance=servico)
 
-        return redirect("servicos:index")
-    
+        if formulario.is_valid():
+            servico.nome = formulario.cleaned_data["nome"]
+            servico.duracao = formulario.cleaned_data["duracao"]
+            servico.descricao = formulario.cleaned_data["descricao"]
+
+            servico.save()
+
+            return redirect("servicos:index")
+        else:
+            mensagem = "Erro de Preenchimento!"
+
+    return render(
+        request,
+        "servicos/add.html",
+        {
+            "id" : id,
+            "form" : ServicoForm(instance=servico),
+            "mensagem": mensagem
+        })
+
 def delete_servico(request, id : int):
-    if request.method == 'GET':
-        return render(request, "servicos/delete.html", {"servico":Servico.objects.get(id=id)})
+    servico = get_object_or_404(Servico,id=id)
+
     if request.method == 'POST':
-        Servico.objects.get(id=id).delete()
+        servico.delete()
         return redirect("servicos:index")
+    else:
+        return render(
+            request,
+            "servicos/delete.html",
+            {"servico":servico}
+        )
+
     

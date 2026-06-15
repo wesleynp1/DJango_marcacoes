@@ -6,7 +6,12 @@
 {% block content %}
     <h2 class="text-center">Exercício Python - Serviços</h2>
 
-    <form action="{% url 'servicos:add' %}" method="post">
+    <form   action= {% if acao == "add" %}
+                        {% url 'servicos:add' %}
+                    {% else %}
+                        {% url 'servicos:edit' id %}
+                    {% endif %}
+            method="post">
         {% csrf_token %}
 
         {{ form }}
@@ -18,5 +23,5 @@
 
     <p class="text-danger text-center">{{ mensagem }}</p>
 
-    <a onclick="history.back()" class="btn btn-primary">VOLTAR</a>
+    <a href='{% url "servicos:index" %}' class="btn btn-primary">VOLTAR</a>
 {% endblock %}
