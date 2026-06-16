@@ -44,11 +44,11 @@ def edit_servico(request, id : int):
         formulario = ServicoForm(request.POST,instance=servico)
 
         if formulario.is_valid():
-            servico.nome = formulario.cleaned_data["nome"]
-            servico.duracao = formulario.cleaned_data["duracao"]
-            servico.descricao = formulario.cleaned_data["descricao"]
-
-            servico.save()
+            Servico.objects.filter(id=id).update(
+                nome = formulario.cleaned_data["nome"],
+                duracao = formulario.cleaned_data["duracao"],
+                descricao = formulario.cleaned_data["descricao"]
+            )
 
             return redirect("servicos:index")
         else:

@@ -57,7 +57,7 @@ class testClientes(TestCase):
 
     def test_delete_cliente(self):
         dados_cliente = {"cpf":"12345678910", "nome":"Ana"}
-        resposta = self.client.get(reverse("clientes:delete",kwargs={"cpf":dados_cliente["cpf"]}))
+        resposta = self.client.get(reverse("clientes:delete", kwargs={"cpf":dados_cliente["cpf"]}))
         self.assertEqual(resposta.status_code, 200)
         self.assertContains(resposta, dados_cliente["nome"])
 
@@ -65,7 +65,7 @@ class testClientes(TestCase):
         self.assertEqual(resposta.status_code, 302)
         self.assertEqual(Cliente.objects.filter(cpf=dados_cliente["cpf"]).count(),0)
 
-    def test_delete_cliente(self):
+    def test_edit_cliente(self):
         novos_dados_cliente = {
             "cpf": "12345678910", #imutável
             "nome": "Yudi",
@@ -74,8 +74,13 @@ class testClientes(TestCase):
 
         resposta = self.client.get(reverse("clientes:edit", kwargs={"cpf": novos_dados_cliente["cpf"]}))
         self.assertEqual(resposta.status_code, 200)
+        self.assertContains(resposta, "Ana")
 
-        resposta = self.client.post(reverse("clientes:edit", kwargs={"cpf": novos_dados_cliente["cpf"]}),novos_dados_cliente)
+        resposta = self.client.post(
+            reverse("clientes:edit", kwargs={"cpf": novos_dados_cliente["cpf"] }),
+            novos_dados_cliente
+        )
+
         self.assertEqual(resposta.status_code, 302)
 
         cliente_atualizado = Cliente.objects.get(cpf=novos_dados_cliente["cpf"])

@@ -6,28 +6,19 @@
 {% block content %}
     <h2 class="text-center">Exercício Python - Clientes</h2>
 
-    <form action="{% url 'clientes:add'%}" method="post">
+    <form
+        action= {% if acao == "add" %} "{% url 'clientes:add'%}" {% else %} "{% url 'clientes:edit' cpf %}" {% endif %}
+        method="post">
         {% csrf_token %}
 
-        <div class="mb-3">
-            <label class="form-label" for="cpf">CPF</label>
-            <input type="text" name="cpf"  class="form-control" id="cpf" maxlength="11" minlength="11" required>
-        </div>
+        {{ form }}
 
-        <div class="mb-3">
-            <label class="form-label" for="nome">Nome</label>
-            <input type="text" name="nome"  class="form-control" id="nome" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for="telefone">Telefone</label>
-            <input type="text" name="telefone"  class="form-control" id="telefone" maxlength="11" pattern="[0-9]*">
-        </div>
-
-        <div class="d-flex justify-content-evenly">
+        <div class="d-flex justify-content-evenly mt-4">
             <input type="submit" value="REGISTRAR" class="btn btn-primary">
         </div>
     </form>
+
+    <p class="text-danger text-center mt-4">{{ mensagem }}</p>
 
     <a href="{% url 'clientes:index' %}" class="btn btn-primary">VOLTAR</a>
 {% endblock %}

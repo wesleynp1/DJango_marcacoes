@@ -6,22 +6,18 @@
 {% block content %}
     <h2 class="text-center">Exercício Python - Serviços</h2>
 
-    <form   action= {% if acao == "add" %}
-                        {% url 'servicos:add' %}
-                    {% else %}
-                        {% url 'servicos:edit' id %}
-                    {% endif %}
-            method="post">
+    <form action= {% if acao == "add" %} {% url 'servicos:add' %} {% else %} {% url 'servicos:edit' id %} {% endif %}
+          method="post">
         {% csrf_token %}
 
         {{ form }}
 
-        <div class="d-flex justify-content-evenly">
+        <div class="d-flex justify-content-evenly mt-4">
             <input type="submit" value="REGISTRAR" class="btn btn-primary">
         </div>
     </form>
 
-    <p class="text-danger text-center">{{ mensagem }}</p>
+    <p class="text-danger text-center mt-4">{{ mensagem }}</p>
 
     <a href='{% url "servicos:index" %}' class="btn btn-primary">VOLTAR</a>
 {% endblock %}
