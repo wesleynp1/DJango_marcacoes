@@ -7,7 +7,7 @@
     <h2 class="text-center">Exercício Python - Clientes</h2>
 
     <form
-        action= {% if acao == "add" %} "{% url 'clientes:add'%}" {% else %} "{% url 'clientes:edit' cpf %}" {% endif %}
+        action= {% if acao == "add" %} "{% url 'clientes:add'%}" {% else %} "{% url 'clientes:edit' id %}" {% endif %}
         method="post">
         {% csrf_token %}
 

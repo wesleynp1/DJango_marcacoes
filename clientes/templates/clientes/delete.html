@@ -6,7 +6,7 @@
 {% block content %}
     <h2 class="text-center">Atenção! você esta prestes a deletar o cliente</h2>
 
-    <form action="{% url 'clientes:delete' cliente.cpf %}" method="post" class="form-control mb-3">
+    <form action="{% url 'clientes:delete' cliente.id %}" method="post" class="form-control mb-3">
         {% csrf_token %}
 
         <p class="text-center">Cliente {{ cliente.nome }} com CPF: {{ cliente.cpf }}</p>

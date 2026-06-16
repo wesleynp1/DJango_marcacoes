@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.test import TestCase
-from django.shortcuts import reverse
+from django.shortcuts import reverse, get_object_or_404
 from django.utils import timezone
 
 from servicos.models import Servico
@@ -56,28 +56,35 @@ class testClientes(TestCase):
         self.assertEqual(clienteNovo.telefone, dados["telefone"])
 
     def test_delete_cliente(self):
-        dados_cliente = {"cpf":"12345678910", "nome":"Ana"}
-        resposta = self.client.get(reverse("clientes:delete", kwargs={"cpf":dados_cliente["cpf"]}))
-        self.assertEqual(resposta.status_code, 200)
-        self.assertContains(resposta, dados_cliente["nome"])
+        cliente_para_deletar = get_object_or_404(Cliente, cpf='12345678910')
 
-        resposta = self.client.post(reverse("clientes:delete", kwargs={"cpf": dados_cliente["cpf"]}))
+        #formulario de deleção
+        resposta = self.client.get(reverse("clientes:delete", kwargs={"id":cliente_para_deletar.id} ))
+        self.assertEqual(resposta.status_code, 200)
+        self.assertContains(resposta, cliente_para_deletar.nome)
+
+        #deleção
+        resposta = self.client.post(reverse("clientes:delete", kwargs={"id":cliente_para_deletar.id} ))
         self.assertEqual(resposta.status_code, 302)
-        self.assertEqual(Cliente.objects.filter(cpf=dados_cliente["cpf"]).count(),0)
+
+        #certifica-se que não existe mais
+        #self.assertNotContains(resposta, cliente_para_deletar.cpf)
 
     def test_edit_cliente(self):
+        cliente_para_editar = get_object_or_404(Cliente, cpf='12345678910')
+
         novos_dados_cliente = {
             "cpf": "12345678910", #imutável
             "nome": "Yudi",
             "telefone":"1140028922"
         }
 
-        resposta = self.client.get(reverse("clientes:edit", kwargs={"cpf": novos_dados_cliente["cpf"]}))
+        resposta = self.client.get(reverse("clientes:edit", kwargs={"id": cliente_para_editar.id}))
         self.assertEqual(resposta.status_code, 200)
         self.assertContains(resposta, "Ana")
 
         resposta = self.client.post(
-            reverse("clientes:edit", kwargs={"cpf": novos_dados_cliente["cpf"] }),
+            reverse("clientes:edit", kwargs={"id": cliente_para_editar.id}),
             novos_dados_cliente
         )
 

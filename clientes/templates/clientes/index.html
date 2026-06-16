@@ -23,8 +23,8 @@
                         <td>{{ cliente.cpf }}</td>
                         <td>{{ cliente.nome }}</td>
                         <td>{{ cliente.telefone }}</td>
-                        <td> <a href="{% url 'clientes:delete' cliente.cpf %}" class="btn btn-danger">DELETE</a> </td>
-                        <td> <a href="{% url 'clientes:edit' cliente.cpf %}" class="btn btn-primary">EDITAR</a> </td>
+                        <td> <a href="{% url 'clientes:delete' cliente.id %}" class="btn btn-danger">DELETE</a> </td>
+                        <td> <a href="{% url 'clientes:edit' cliente.id %}" class="btn btn-primary">EDITAR</a> </td>
                     </tr>
                 {% endfor %}
                 <tr>

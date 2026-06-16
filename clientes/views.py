@@ -41,8 +41,8 @@ def add_cliente(request):
     )
 
 @login_required
-def delete_clientes(request,cpf : str):
-    cliente = get_object_or_404(Cliente, cpf=cpf)
+def delete_clientes(request, id : int):
+    cliente = get_object_or_404(Cliente, id=id)
 
     if request.method == "POST":
         cliente.delete()
@@ -51,15 +51,16 @@ def delete_clientes(request,cpf : str):
     return render(request, "clientes/delete.html", {"cliente": cliente})
 
 @login_required
-def edit_clientes(request, cpf : str):
-    cliente = get_object_or_404(Cliente, cpf=cpf)
+def edit_clientes(request, id : int):
+    cliente = get_object_or_404(Cliente, id=id)
     mensagem = ""
 
     if request.method == "POST":
         formulario = ClienteForm(request.POST, instance=cliente)
 
         if formulario.is_valid():
-            Cliente.objects.filter(cpf=cpf).update(
+            Cliente.objects.filter(id=id).update(
+                cpf = formulario.cleaned_data["cpf"],
                 nome = formulario.cleaned_data["nome"],
                 telefone = formulario.cleaned_data["telefone"]
             )
@@ -72,7 +73,7 @@ def edit_clientes(request, cpf : str):
         request,
         "clientes/add.html",
         {
-            "cpf" : cliente.cpf,
+            "id" : cliente.id,
             "form": ClienteForm(instance=cliente),
             "mensagem": mensagem
         }

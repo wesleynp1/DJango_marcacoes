@@ -6,6 +6,6 @@ app_name = "clientes"
 urlpatterns = [
     path("",views.index,name="index"),
     path("add", views.add_cliente, name="add"),
-    path("delete/<str:cpf>", views.delete_clientes, name="delete"),
-    path("edit/<str:cpf>", views.edit_clientes, name="edit")
+    path("delete/<int:id>", views.delete_clientes, name="delete"),
+    path("edit/<int:id>", views.edit_clientes, name="edit")
 ]

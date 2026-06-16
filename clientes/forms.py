@@ -6,7 +6,7 @@ class ClienteForm(forms.ModelForm):
         model = Cliente
         fields = [ 'cpf', 'nome', 'telefone' ]
         widgets = {
-            'cpf':      forms.TextInput(attrs={'class': 'form-control', 'readonly':''}),
+            'cpf':      forms.TextInput(attrs={'class': 'form-control'}),
             'nome':     forms.TextInput(attrs={'class': 'form-control'}),
             'telefone': forms.TextInput(attrs={'class': 'form-control'}),
         }
