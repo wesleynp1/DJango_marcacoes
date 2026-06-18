@@ -21,14 +21,14 @@ def add_cliente(request):
 
         if cliente.is_valid():
             Cliente.objects.create(
-                cpf=      cliente.cleaned_data["cpf"],
-                nome=     cliente.cleaned_data["nome"],
-                telefone= cliente.cleaned_data["telefone"]
+                cpf      = cliente.cleaned_data["cpf"],
+                nome     = cliente.cleaned_data["nome"],
+                telefone = cliente.cleaned_data["telefone"]
             )
 
             return redirect("clientes:index")
         else:
-            mensagem = 'Erro de preenchimento do formulario'
+            mensagem = f'Erro de preenchimento do formulario'
 
     return render(
         request,

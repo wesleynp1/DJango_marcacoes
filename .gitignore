@@ -1,5 +1,7 @@
 .env
 .idea
+.vscode
+_trial_temp
 db.sqlite3
 */__pycache__/*
 __pycache__/*

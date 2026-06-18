@@ -14,12 +14,12 @@ class TestMarcacao(TestCase):
         cliente1 = Cliente.objects.create(
             cpf='12345678910',
             nome='Ana',
-            telefone='21987451236'
+            telefone=21987451236
         )
         cliente2 = Cliente.objects.create(
             cpf='15365445911',
             nome='Bob',
-            telefone='21978415327'
+            telefone=21978415327
         )
 
         servico1 = Servico.objects.create(
@@ -54,7 +54,7 @@ class TestMarcacao(TestCase):
         novo_cliente = Cliente.objects.create(
             cpf="16186843458",
             nome="Carla",
-            telefone="22956458712"
+            telefone=22956458712
         )
 
         self.assertEqual(Cliente.objects.get(cpf=novo_cliente.cpf).nome, 'Carla')

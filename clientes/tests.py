@@ -11,8 +11,8 @@ from django.contrib import auth
 # Create your tests here.
 class testClientes(TestCase):
     def setUp(self):
-        c1 = Cliente.objects.create(cpf='12345678910', nome='Ana', telefone='21987451236')
-        c2 = Cliente.objects.create(cpf='15365445911', nome='Bob', telefone='21978415327')
+        c1 = Cliente.objects.create(cpf='12345678910', nome='Ana', telefone=21987451236)
+        c2 = Cliente.objects.create(cpf='15365445911', nome='Bob', telefone=21978415327)
 
         s1 = Servico.objects.create( nome='Servico A', duracao=40, descricao="Um bom serviço" )
         s2 = Servico.objects.create( nome='Servico B', duracao=60, descricao="Um excelente serviço")
@@ -41,15 +41,19 @@ class testClientes(TestCase):
     def test_add_cliente(self):
         resposta = self.client.get(reverse("clientes:add"))
         self.assertEqual(resposta.status_code, 200)
+        self.assertContains(resposta, "form")
+        self.assertContains(resposta, "CPF")
+        self.assertContains(resposta, "Nome")
+        self.assertContains(resposta, "Telefone")
 
         dados = {
             "cpf":"12345678915",
             "nome":"Julia",
-            "telefone":"2197458365"
+            "telefone" : 2197458365
         }
 
-        reposta = self.client.post(reverse("clientes:add"),dados)
-        self.assertEqual(reposta.status_code, 302)
+        resposta = self.client.post(reverse("clientes:add"),dados)
+        self.assertEqual(resposta.status_code, 302)
 
         clienteNovo = Cliente.objects.get(cpf=dados["cpf"])
         self.assertEqual(clienteNovo.nome, dados["nome"])
@@ -76,7 +80,7 @@ class testClientes(TestCase):
         novos_dados_cliente = {
             "cpf": "12345678910", #imutável
             "nome": "Yudi",
-            "telefone":"1140028922"
+            "telefone":1140028922
         }
 
         resposta = self.client.get(reverse("clientes:edit", kwargs={"id": cliente_para_editar.id}))
