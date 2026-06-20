@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 
+import django
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -43,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'marcacoes.apps.MarcacoesConfig',
     'clientes.apps.ClientesConfig',
-    'servicos.apps.ServicosConfig'
+    'servicos.apps.ServicosConfig',
+    'django.forms'
 ]
 
 MIDDLEWARE = [
@@ -148,3 +150,6 @@ STORAGES = {
 CSRF_TRUSTED_ORIGINS = [
     os.getenv('CSRF_TRUSTED_ORIGIN'),
 ]
+
+#Diz ao django qual render usar
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"

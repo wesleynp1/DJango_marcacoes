@@ -2,14 +2,33 @@ from django import forms
 from clientes.models import Cliente
 
 class ClienteForm(forms.ModelForm):
-    template_name = 'clientes/form_wnp.html'
+    #template_name = 'django/forms/form_wnp.html'
 
     class Meta:
         model = Cliente
-        fields = ['cpf', 'nome', 'telefone']
-        labels = { "cpf":"CPF", "telefone" : "Telefone(apenas números)" }
+
+        #determina quais campos e a ordem de exibição
+        fields = [ 'nome', 'cpf', 'telefone' ]
+
+        labels = {
+            "cpf" : "CPF  (apenas números)",
+            "telefone" : "Telefone   (apenas números)"
+        }
+
         widgets = {
-            'cpf':      forms.TextInput(attrs={'class': 'form-control'}),
-            'nome':     forms.TextInput(attrs={'class': 'form-control'}),
-            'telefone': forms.TextInput(attrs={'class': 'form-control','maxlength': 11}),
+            'cpf':      forms.TextInput(attrs={
+                'class': 'form-control mb-3',
+                'inputmode': 'numeric',
+                'pattern' : '[0-9]*'
+            }),
+
+            'nome':     forms.TextInput(attrs={
+                'class': 'form-control  mb-3',
+            }),
+
+            'telefone': forms.TextInput(attrs={
+                'class': 'form-control mb-3',
+                'inputmode': 'numeric',
+                'pattern' : '[0-9]*'
+            }),
         }
