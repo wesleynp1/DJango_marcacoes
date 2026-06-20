@@ -72,7 +72,7 @@ class testClientes(TestCase):
         self.assertEqual(resposta.status_code, 302)
 
         #certifica-se que não existe mais
-        #self.assertNotContains(resposta, cliente_para_deletar.cpf)
+        self.assertEqual(Cliente.objects.filter(id=cliente_para_deletar.id).count(), 0)
 
     def test_edit_cliente(self):
         cliente_para_editar = get_object_or_404(Cliente, cpf='12345678910')

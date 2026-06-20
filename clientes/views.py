@@ -17,25 +17,27 @@ def add_cliente(request):
     mensagem = ""
 
     if request.method == "POST":
-        cliente = ClienteForm(request.POST)
+        formulario = ClienteForm(request.POST)
 
-        if cliente.is_valid():
+        if formulario.is_valid():
             Cliente.objects.create(
-                cpf      = cliente.cleaned_data["cpf"],
-                nome     = cliente.cleaned_data["nome"],
-                telefone = cliente.cleaned_data["telefone"]
+                cpf      = formulario.cleaned_data["cpf"],
+                nome     = formulario.cleaned_data["nome"],
+                telefone = formulario.cleaned_data["telefone"]
             )
 
             return redirect("clientes:index")
         else:
             mensagem = f'Erro de preenchimento do formulario'
+    else:
+        formulario = ClienteForm()
 
     return render(
         request,
         "clientes/add.html",
         {
             "acao" : "add",
-            "form": ClienteForm(),
+            "form": formulario,
             "mensagem" : mensagem
         }
     )
