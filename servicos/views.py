@@ -28,7 +28,7 @@ def add_servico(request):
 
     return render(
         request,
-        "servicos/add.html",
+        "servicos/form.html",
         {
             "acao" : "add",
             "form": ServicoForm(),
@@ -56,7 +56,7 @@ def edit_servico(request, id : int):
 
     return render(
         request,
-        "servicos/add.html",
+        "servicos/form.html",
         {
             "id" : id,
             "form" : ServicoForm(instance=servico),

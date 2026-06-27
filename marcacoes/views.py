@@ -1,11 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from datetime import datetime
+from django.core.exceptions import ValidationError
+from django.http import HttpRequest
+from django.shortcuts import render, redirect, get_object_or_404
+from datetime import datetime, timedelta
 from django.utils import timezone
 
 from marcacoes.models import  Marcacao
 from clientes.models import Cliente
 from servicos.models import Servico
+from .form import MarcacaoForm
 
 # Create your views here.
 @login_required
@@ -13,13 +16,19 @@ def index(request):
     marcacoes = Marcacao.objects.all().order_by("-datahora")
 
     for marcacao in marcacoes:
-        #formata o nome do cliente se houver
-        if marcacao.cliente:
-            marcacao.cliente.nome = marcacao.cliente.nome.title()
+        marcacao.cliente.nome = marcacao.cliente.nome.title()
 
         #separa data e hora para exibição
-        marcacao.data = timezone.localtime(marcacao.datahora).strftime('%d/%m/%Y')
-        marcacao.hora = timezone.localtime(marcacao.datahora).strftime('%H:%M')
+        marcacao.datahora = timezone.localtime(marcacao.datahora)
+
+        marcacao.data_inicio = marcacao.datahora.strftime('%d/%m/%Y')
+        marcacao.hora_inicio = marcacao.datahora.strftime('%H:%M')
+
+        marcacao.duracao = marcacao.servico.duracao
+
+        marcacao.data_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%d/%m/%Y')
+        marcacao.hora_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%H:%M')
+
 
     return render(
         request,
@@ -31,30 +40,79 @@ def index(request):
     )
 
 @login_required
-def add_marcacoes(request):
-    if request.method == 'GET':
-        return render(
+def add_marcacoes(request : HttpRequest):
+
+    if request.method == 'POST':
+        formulario = MarcacaoForm(request.POST)
+
+        if formulario.is_valid():
+
+            nova_marcacao = Marcacao(
+                datahora = formulario.cleaned_data.get('datahora'),
+                cliente  = formulario.cleaned_data.get('cliente'),
+                servico  = formulario.cleaned_data.get('servico'),
+            )
+
+            try:
+                nova_marcacao.clean()
+                nova_marcacao.save()
+                return redirect("index")
+
+            except ValidationError as e:
+                formulario.add_error(None,e)
+
+    else:
+        hoje = timezone.localtime(timezone.now())
+        formulario = MarcacaoForm({
+            'servico': Servico.objects.first(),
+            'cliente': Cliente.objects.first(),
+            'date': hoje.strftime('%Y-%m-%d'),
+            'hora': hoje.strftime('%H:%M')
+        })
+
+    return render(
         request,
         'marcacoes/add.html',
-        {
-            "servicos": Servico.objects.all(),
-            "clientes": Cliente.objects.all(),
-            "agora": timezone.now()
-        }
+        {'form' : formulario}
     )
-    elif request.method == 'POST':
 
-        livre = request.POST["cliente"] == 'LIVRE'
+@login_required
+def edit_marcacao(request, id : int):
+    marcacao_a_editar = get_object_or_404(Marcacao, id=id)
 
-        Marcacao.objects.create(
-            datahora = timezone.make_aware(datetime.fromisoformat(request.POST['data']+"T"+request.POST['hora']+":00")),
-            cliente  = Cliente.objects.get(cpf=request.POST['cliente']) if not livre else None,
-            servico  = Servico.objects.get(id=request.POST['servico']) if not livre else None,
-        )
+    if request.method == 'POST':
+        formulario = MarcacaoForm(request.POST)#passar o id para o form
 
-        return redirect("index")
+        if formulario.is_valid():
+            marcacao_a_editar.datahora = formulario.cleaned_data.get('datahora')
+            marcacao_a_editar.cliente  = formulario.cleaned_data.get('cliente')
+            marcacao_a_editar.servico  = formulario.cleaned_data.get('servico')
+
+            try:
+                marcacao_a_editar.clean()
+                marcacao_a_editar.save()
+
+                return redirect("index")
+            except ValidationError as e:
+                formulario.add_error(None,e)
     else:
-        return "error"
+        marcacao_a_editar.datahora = timezone.localtime(marcacao_a_editar.datahora)
+
+        dados = {
+            "id": id,
+            "cliente": marcacao_a_editar.cliente,
+            "servico": marcacao_a_editar.servico,
+            'date': marcacao_a_editar.datahora.strftime('%Y-%m-%d'),
+            'hora': marcacao_a_editar.datahora.strftime('%H:%M')
+        }
+
+        formulario = MarcacaoForm(dados)
+
+    return render(
+        request,
+        'marcacoes/add.html',
+        {'form' : formulario }
+    )
 
 @login_required
 def delete_marcacao(request, id : int):
@@ -69,42 +127,3 @@ def delete_marcacao(request, id : int):
             "marcacoes/delete.html",
             {"marcacao":marcacao}
         )
-
-@login_required
-def edit_marcacao(request, id : int):
-    if request.method == 'GET':
-        marcacoes = Marcacao.objects.get(id=id)
-        marcacao_edit = Marcacao.objects.get(id=id)
-
-        # separa data e hora
-        marcacao_edit.data = timezone.localtime(marcacao_edit.datahora).strftime('%Y-%m-%d')
-        marcacao_edit.hora = timezone.localtime(marcacao_edit.datahora).strftime('%H:%M')
-
-        dados = {
-            "clientes" : Cliente.objects.all(),
-            "servicos" : Servico.objects.all(),
-            "agora"    : timezone.now(),
-            "marcacoes": marcacoes,
-            "marcacao" : marcacao_edit,
-        }
-
-        return render(request, 'marcacoes/edit.html', dados)
-    elif request.method == 'POST':
-
-        marcacao = Marcacao.objects.get(id=id)
-
-        #ajusta datahora
-        marcacao.datahora = timezone.make_aware(datetime.fromisoformat(request.POST['data']+"T"+request.POST['hora']+":00"))
-
-        #ajusta campo cliente e serviço
-        if  request.POST["cliente"] != 'LIVRE':
-            marcacao.cliente = Cliente.objects.get(cpf=request.POST['cliente'])
-            marcacao.servico = Servico.objects.get(id=request.POST['servico'])
-        else:
-            marcacao.cliente = None
-
-        marcacao.save()
-
-        return redirect("index")
-    else:
-        return "error"

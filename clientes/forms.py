@@ -2,8 +2,6 @@ from django import forms
 from clientes.models import Cliente
 
 class ClienteForm(forms.ModelForm):
-    #template_name = 'django/forms/form_wnp.html'
-
     class Meta:
         model = Cliente
 

@@ -4,11 +4,9 @@
 {% endblock%}
 
 {% block content %}
-    <h2 class="text-center">Exercício Python - Clientes</h2>
+    <h2 class="text-center">Exercício Python - Serviços</h2>
 
-    <form
-        action= {% if acao == "add" %} "{% url 'clientes:add'%}" {% else %} "{% url 'clientes:edit' id %}" {% endif %}
-        method="post">
+    <form method="post">
         {% csrf_token %}
 
         {{ form }}
@@ -20,5 +18,5 @@
 
     <p class="text-danger text-center mt-4">{{ mensagem }}</p>
 
-    <a href="{% url 'clientes:index' %}" class="btn btn-primary">VOLTAR</a>
+    <a href='{% url "servicos:index" %}' class="btn btn-primary">VOLTAR</a>
 {% endblock %}

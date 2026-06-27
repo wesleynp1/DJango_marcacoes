@@ -6,53 +6,27 @@
 {% block content %}
     <h2 class="text-center">Exercício Python - Marcações</h2>
 
-    <form action="{% url 'marcacoes:add' %}" method="post">
+    <form method="post">
         {% csrf_token %}
 
-        <div class="mb-3">
-            <label class="form-label" for="cliente">Cliente</label>
-            <select name="cliente"  class="form-select" id="cliente" required>
-                {% for cliente in clientes %}
-                    <option value="{{ cliente.cpf }}">{{ cliente.nome }}</option>
-                {% endfor %}
-                <optgroup label="">
-                    <option value="LIVRE">LIVRE</option>
-                </optgroup>
-            </select>
-        </div>
+        {% for input in form %}
+            <div class="mb-4">
+                {{ input.label_tag }}
+                {{ input }}
+                {{ input.errors }}
+            </div>
+        {% endfor %}
 
-        <div class="mb-3">
-            <label class="form-label" for="servico">Serviço</label>
-            <select name="servico" class="form-select" id="servico">
-                {% for servico in servicos %}
-                    <option value="{{ servico.id }}">{{ servico.nome }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for="data">Data</label>
-            <input type="date"
-                   name="data"
-                   id="data"
-                   min="{{ agora|date:'Y-m-d' }}"
-                   class="form-control"
-                   required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label" for='hora'>Hora</label>
-            <input type="time"
-                   name="hora"
-                   id="hora"
-                   class="form-control"
-                   required>
-        </div>
-
+        {{ form.non_field_errors }}
         <div class="d-flex justify-content-evenly">
             <input type="submit" value="REGISTRAR" class="btn btn-primary">
         </div>
     </form>
 
     <a href="{% url 'index' %}" class="btn btn-primary">VOLTAR</a>
+
+    <script>
+        const cliente = document.getElementById('cliente')
+        const servico = document.getElementById('servico')
+    </script>
 {% endblock %}

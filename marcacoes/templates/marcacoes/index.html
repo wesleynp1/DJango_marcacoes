@@ -9,8 +9,9 @@
     <table  class="table table-dark">
         <thead>
             <tr>
-                <th>DIA</th>
-                <th>HORA</th>
+                <th>INICIO</th>
+                <th>FIM</th>
+                <th>DURAÇÃO</th>
                 <th>CLIENTE</th>
                 <th>SERVIÇOS</th>
                 <th>DELETE</th>
@@ -20,21 +21,23 @@
         <tbody>
             {% for marcacao in marcacoes %}
                 <tr>
-                    <td>{{ marcacao.data }}</td>
-                    <td>{{ marcacao.hora }}</td>
-                    {% if marcacao.cliente %}
-                        <td>{{ marcacao.cliente.nome }}</td>
-                        <td>{{ marcacao.servico.nome }}</td>
-                    {% else %}
-                        <td>LIVRE</td>
-                        <td>LIVRE</td>
-                    {% endif %}
+                    <td>
+                        {{ marcacao.data_inicio }}<br>
+                        {{ marcacao.hora_inicio }}
+                    </td>
+                    <td>
+                        {{ marcacao.data_fim }}<br>
+                        {{ marcacao.hora_fim }}
+                    </td>
+                    <td>{{ marcacao.duracao }} min.</td>
+                    <td>{{ marcacao.cliente.nome }}</td>
+                    <td>{{ marcacao.servico.nome }}</td>
                     <td> <a href="{% url 'marcacoes:delete' marcacao.id %}" class="btn btn-danger">DELETE</a> </td>
                     <td> <a href="{% url 'marcacoes:edit' marcacao.id %}" class="btn btn-primary">EDITAR</a> </td>
                 </tr>
             {% endfor %}
             <tr>
-                <td colspan="6"> <a href="{%  url 'marcacoes:add' %}"> NOVA MARCAÇÃO </a> </td>
+                <td colspan="7"> <a href="{%  url 'marcacoes:add' %}"> NOVA MARCAÇÃO </a> </td>
             </tr>
         </tbody>
     </table>

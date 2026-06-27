@@ -8,3 +8,6 @@ class Cliente(models.Model):
     cpf = models.CharField(max_length=11, unique=True, primary_key=False)
     nome = models.CharField(max_length=100)
     telefone = models.BigIntegerField(validators=[MaxValueValidator(99_99999_9999)])
+
+    def __str__(self):
+        return self.nome

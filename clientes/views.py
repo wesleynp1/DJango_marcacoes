@@ -34,7 +34,7 @@ def add_cliente(request):
 
     return render(
         request,
-        "clientes/add.html",
+        "clientes/form.html",
         {
             "acao" : "add",
             "form": formulario,
@@ -73,7 +73,7 @@ def edit_clientes(request, id : int):
 
     return render(
         request,
-        "clientes/add.html",
+        "clientes/form.html",
         {
             "id" : cliente.id,
             "form": ClienteForm(instance=cliente),
