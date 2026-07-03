@@ -72,7 +72,7 @@ def add_marcacoes(request : HttpRequest):
 
     return render(
         request,
-        'marcacoes/add.html',
+        'marcacoes/form.html',
         {'form' : formulario}
     )
 
@@ -110,7 +110,7 @@ def edit_marcacao(request, id : int):
 
     return render(
         request,
-        'marcacoes/add.html',
+        'marcacoes/form.html',
         {'form' : formulario }
     )
 

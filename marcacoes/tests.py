@@ -38,22 +38,24 @@ class TestMarcacao(TestCase):
             descricao='É um servico classe B'
         )
 
+        agora = timezone.now()
+
         # MARCAÇÕES
         Marcacao.objects.create(
             cliente=cliente1,
-            datahora= (timezone.now() + timedelta(hours=4)),
+            datahora= agora,
             servico = servico1
         )
 
         Marcacao.objects.create(
             cliente=cliente2,
-            datahora=(timezone.now() + timedelta(hours=6)),
+            datahora=(agora + timedelta(hours=2)),
             servico=servico2
         )
 
         Marcacao.objects.create(
             cliente=cliente2,
-            datahora=(timezone.now() + timedelta(hours=8)),
+            datahora=(agora + timedelta(hours=4)),
             servico = servico2
         )
 
