@@ -11,3 +11,10 @@ class Cliente(models.Model):
 
     def __str__(self):
         return self.nome
+    
+    def get_cpf_formatado(self):
+        return f"{self.cpf[0:3]}.{self.cpf[3:6]}.{self.cpf[6:9]}-{self.cpf[9:]}"
+
+    def get_telefone_formatado(self):
+        telefone_str = str(self.telefone)
+        return f"({telefone_str[0:2]}) {telefone_str[2:7]}-{telefone_str[7:]}"
