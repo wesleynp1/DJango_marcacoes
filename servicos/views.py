@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Servico
 from .forms  import ServicoForm
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def index(request):
     return render(
         request,
         "servicos/index.html",
         {"servicos": Servico.objects.all()})
 
+@login_required
 def add_servico(request):
     mensagem = ''
 
@@ -36,6 +38,7 @@ def add_servico(request):
         }
     )
 
+@login_required
 def edit_servico(request, id : int):
     servico = get_object_or_404(Servico, id=id)
     mensagem = ""
@@ -63,6 +66,7 @@ def edit_servico(request, id : int):
             "mensagem": mensagem
         })
 
+@login_required
 def delete_servico(request, id : int):
     servico = get_object_or_404(Servico,id=id)
 

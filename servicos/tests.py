@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import Servico
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 class TesteServicos(TestCase):
     def setUp(self):
@@ -10,12 +11,18 @@ class TesteServicos(TestCase):
             descricao = 'Servico em Python'
         )
 
+        user = User.objects.create_user("teste", "teste@testando.com", "12345678")
+        self.client.force_login(user)
+
+
     def test_setup_cumprido(self):
-        self.assertGreater(Servico.objects.all().count(),0)
+        self.assertGreater(Servico.objects.all().count(), 0)
+
 
     def test_servico_mostrar(self):
        resposta = self.client.get(reverse("servicos:index"))
        self.assertEqual(resposta.status_code, 200)
+
 
     def test_servico_criar(self):
         resposta = self.client.get(reverse("servicos:add"))
@@ -30,6 +37,7 @@ class TesteServicos(TestCase):
         resposta = self.client.post(reverse("servicos:add"),dados)
         self.assertEqual(resposta.status_code, 302)
         self.assertGreater(Servico.objects.filter(nome=dados["nome"]).count(), 0)
+
 
     def test_servico_criar_muito_curto(self):
 
@@ -64,9 +72,10 @@ class TesteServicos(TestCase):
         self.assertEqual(s1.nome, novosDados["nome"])
         self.assertEqual(s1.descricao, novosDados["descricao"])
 
+
     def test_servico_delete(self):
         s1 = Servico.objects.first()
-        resposta = self.client.get(reverse("servicos:delete",kwargs={"id": s1.id}))
+        resposta = self.client.get(reverse("servicos:delete", kwargs={"id": s1.id}))
         self.assertEqual(resposta.status_code, 200)
 
         novosDados = {
@@ -78,3 +87,19 @@ class TesteServicos(TestCase):
         resposta = self.client.post(reverse("servicos:delete",kwargs={"id":s1.id}),novosDados)
         self.assertEqual(resposta.status_code, 302)
         self.assertEqual(Servico.objects.filter(nome=s1.nome).count(), 0)
+
+    def test_acessar_servicos_sem_login(self):
+        self.client.logout()
+
+        resposta = self.client.get(reverse("servicos:index"))
+        self.assertEqual(resposta.status_code, 302)
+
+        resposta = self.client.get(reverse("servicos:add"))
+        self.assertEqual(resposta.status_code, 302)
+
+        resposta = self.client.get(reverse("servicos:edit"  ,kwargs={"id" : 1}))
+        self.assertEqual(resposta.status_code, 302)
+
+        resposta = self.client.get(reverse("servicos:delete",kwargs={"id" : 1}))
+        self.assertEqual(resposta.status_code, 302)
+        
