@@ -27,3 +27,13 @@ form{
 th,td{
     text-align: center;
 }
+
+header{
+    position: sticky;
+    top: 0;
+    border-bottom: 1px #cbcbcb solid;
+}
+
+h1{
+    margin: 0;
+}

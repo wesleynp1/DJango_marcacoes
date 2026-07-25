@@ -4,11 +4,36 @@
     --bs-body-color: rgb(255, 255, 255);
     --bs-secondary-color: rgb(200,200,200)
 }
+
 body{
     background-color: #000000;
     color: #cbcbcb;
 }
 
+main{
+    text-align: center;
+}
+
+input[type="text"], label{
+    text-align: left;
+    display: block;
+}
+
+form{
+    max-width: 400px;
+    margin: auto
+}
+
 th,td{
     text-align: center;
+}
+
+header{
+    position: sticky;
+    top: 0;
+    border-bottom: 1px #cbcbcb solid;
+}
+
+h1{
+    margin: 0;
 }
