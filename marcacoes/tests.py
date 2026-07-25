@@ -14,7 +14,7 @@ class TestMarcacao(TestCase):
     def setUp(self):
         # CLIENTES
         cliente1 = Cliente.objects.create(
-            cpf='12345678910',
+            cpf='98765432100',
             nome='Ana',
             telefone=21987451236
         )
@@ -62,8 +62,9 @@ class TestMarcacao(TestCase):
         user = auth.models.User.objects.create_user("teste", "teste@testando.com", "12345678")
         self.client.force_login(user)
 
+
     def test_cliente(self):
-        cliente = Cliente.objects.get(cpf='12345678910')
+        cliente = Cliente.objects.get(cpf='98765432100')
         self.assertEqual(cliente.nome, 'Ana')
 
         novo_cliente = Cliente.objects.create(
@@ -73,6 +74,7 @@ class TestMarcacao(TestCase):
         )
 
         self.assertEqual(Cliente.objects.get(cpf=novo_cliente.cpf).nome, 'Carla')
+
 
     def test_marcacao_add(self):
         resposta = self.client.get(reverse("marcacoes:add"))
@@ -97,6 +99,7 @@ class TestMarcacao(TestCase):
         self.assertEqual(marcacao.datahora.strftime("%H:%M"), dados["hora"])
         self.assertEqual(cliente.nome, "Ana")
 
+
     def test_marcacao_delete(self):
         marcacao = Marcacao.objects.all()[0]
         resposta = self.client.get( reverse("marcacoes:delete",kwargs={"id": marcacao.id}) )
@@ -106,6 +109,7 @@ class TestMarcacao(TestCase):
 
         self.assertEqual(Marcacao.objects.filter(id=1).count(),0)
         self.assertEqual(resposta.status_code,302)
+
 
     def test_marcacao_edit(self):
         marcacao = Marcacao.objects.all().first()
@@ -127,6 +131,7 @@ class TestMarcacao(TestCase):
         marcacao_editada = Marcacao.objects.get(id=marcacao.id)
         marcacao_editada.cliente.id = dados["cliente"]
 
+
     def test_marcacao_edit_curta_deferenca_de_horario(self):
         marcacao = Marcacao.objects.all().first()
         novahora = (marcacao.datahora + timedelta(minutes=15)).time()
@@ -141,6 +146,7 @@ class TestMarcacao(TestCase):
         resultado = self.client.post(reverse("marcacoes:edit",kwargs={"id":marcacao.id}),dados)
         self.assertEqual(resultado.status_code, 302)
 
+
     def test_marcacao_com_conflito(self):
         marcacoes = Marcacao.objects.all()
         marcacao = marcacoes.first()
@@ -149,10 +155,10 @@ class TestMarcacao(TestCase):
             raise Exception("CPF da cliente ana foi alterado")
         else:
             dados = {
-            "date": marcacao.datahora.strftime("%Y-%m-%d"),
-            "hora": (marcacao.datahora + timedelta(minutes=90)).strftime("%H:%M"),
-            "cliente": marcacao.cliente.id,
-            "servico": marcacao.servico.id
+                "date": marcacao.datahora.strftime("%Y-%m-%d"),
+                "hora": (marcacao.datahora + timedelta(minutes=90)).strftime("%H:%M"),
+                "cliente": marcacao.cliente.id,
+                "servico": marcacao.servico.id
             }
 
             resposta = self.client.post(reverse('marcacoes:edit',kwargs={"id":marcacao.id}), dados)

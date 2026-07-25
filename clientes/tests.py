@@ -32,11 +32,13 @@ class testClientes(TestCase):
         user = auth.models.User.objects.create_user("teste", "teste@testando.com", "12345678")
         self.client.force_login(user)
 
+
     def test_index(self):
         resposta = self.client.get(reverse("index"))
         self.assertEqual(resposta.status_code, 200)
         self.assertContains(resposta, "Ana")
         self.assertContains(resposta, "Bob")
+
 
     def test_add_cliente(self):
         resposta = self.client.get(reverse("clientes:add"))
@@ -47,7 +49,7 @@ class testClientes(TestCase):
         self.assertContains(resposta, "Telefone")
 
         dados = {
-            "cpf":"12345678915",
+            "cpf":"12345678909",
             "nome":"Julia",
             "telefone" : 2197458365
         }
@@ -58,6 +60,7 @@ class testClientes(TestCase):
         clienteNovo = Cliente.objects.get(cpf=dados["cpf"])
         self.assertEqual(clienteNovo.nome, dados["nome"])
         self.assertEqual(clienteNovo.telefone, dados["telefone"])
+
 
     def test_delete_cliente(self):
         cliente_para_deletar = get_object_or_404(Cliente, cpf='12345678910')
@@ -74,18 +77,21 @@ class testClientes(TestCase):
         #certifica-se que não existe mais
         self.assertEqual(Cliente.objects.filter(id=cliente_para_deletar.id).count(), 0)
 
-    def test_edit_cliente(self):
-        cliente_para_editar = get_object_or_404(Cliente, cpf='12345678910')
 
-        novos_dados_cliente = {
-            "cpf": "12345678910", #imutável
-            "nome": "Yudi",
-            "telefone":1140028922
-        }
+    def test_edit_cliente(self):
+        #GET
+        cliente_para_editar = get_object_or_404(Cliente, cpf='12345678910')
 
         resposta = self.client.get(reverse("clientes:edit", kwargs={"id": cliente_para_editar.id}))
         self.assertEqual(resposta.status_code, 200)
         self.assertContains(resposta, "Ana")
+
+        #POST
+        novos_dados_cliente = {
+            "cpf": "12345678909",
+            "nome": "Yudi",
+            "telefone":1140028922
+        }
 
         resposta = self.client.post(
             reverse("clientes:edit", kwargs={"id": cliente_para_editar.id}),
@@ -97,3 +103,14 @@ class testClientes(TestCase):
         cliente_atualizado = Cliente.objects.get(cpf=novos_dados_cliente["cpf"])
         self.assertEqual(cliente_atualizado.nome, novos_dados_cliente["nome"])
         self.assertEqual(cliente_atualizado.telefone, novos_dados_cliente["telefone"])
+
+
+    def test_input_CPF_incorreto(self):
+        dados = {
+            "cpf":"11111111111",
+            "nome":"Ciclano",
+            "telefone" : 21985652545
+        }
+
+        resposta = self.client.post(reverse("clientes:add"), dados)
+        self.assertContains(resposta, "CPF incorreto")
