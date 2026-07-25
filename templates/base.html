@@ -6,51 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/estiloBase.css' %}" rel="stylesheet">
+    <link href="{% static 'favicon.ico'%}" rel="icon" type="image/x-icon">
     <title>WNP - {% block title %}{% endblock %}</title>
 </head>
-<body class="container">
-    <header class="">
+<body class="container-fluid p-0">
+    <header class="mb-2">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between px-1">
+          <div class="me-5">
+            <h1 class="text-center">DJANGO MARCAÇÕES</h1>
+          </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <h1 class="text-center">Wellcome to my Python site</h1>
-
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto justify-content-between flex-grow-1">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'index' %}">Marcações</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'clientes:index' %}">Clientes</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'servicos:index' %}">Serviços</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown link
+                <a class="nav-link text-center" href="{% url 'index' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                  </svg>
+
+                  <span>Marcações</span>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link text-center" href="{% url 'clientes:index' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                  </svg>
+
+                  <span>Clientes</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link text-center" href="{% url 'servicos:index' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                    <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334"/>
+                  </svg>
+
+                  <span>Serviços</span>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                {% url 'logout' as url_logout %}
+                {% if user.is_authenticated and request.path != url_logout %}
+                    <div class="text-end">
+                        <a class="btn btn-secondary" href="{% url 'logout' %}" >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+                          </svg>
+                          
+                          <span>SAIR</span>
+                        </a>
+                    </div>
+                {% endif %}
               </li>
             </ul>
           </div>
-        </nav>
 
-        {% url 'logout' as url_logout %}
-        {% if user.is_authenticated and request.path != url_logout %}
-            <div class="text-end">
-                <a class="btn btn-secondary" href="{% url 'logout' %}" >SAIR</a>
-            </div>
-        {% endif %}
+          
+
+        </nav>
     </header>
-    <main>
+    <main class="overflow-scroll">
         {% block content %}
         {% endblock %}
     </main>

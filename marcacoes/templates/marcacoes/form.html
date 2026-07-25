@@ -18,15 +18,11 @@
         {% endfor %}
 
         {{ form.non_field_errors }}
-        <div class="d-flex justify-content-evenly">
+        
+        <div class="d-flex justify-content-evenly mt-4">
             <input type="submit" value="REGISTRAR" class="btn btn-primary">
         </div>
     </form>
 
-    <a href="{% url 'index' %}" class="btn btn-primary">VOLTAR</a>
-
-    <script>
-        const cliente = document.getElementById('cliente')
-        const servico = document.getElementById('servico')
-    </script>
+    <a href="{% url 'index' %}" class="btn btn-secondary mt-4">VOLTAR</a>
 {% endblock %}
