@@ -39,6 +39,7 @@ def index(request):
         }
     )
 
+
 @login_required
 def add_marcacoes(request : HttpRequest):
 
@@ -75,6 +76,7 @@ def add_marcacoes(request : HttpRequest):
         'marcacoes/form.html',
         {'form' : formulario}
     )
+
 
 @login_required
 def edit_marcacao(request, id : int):
@@ -113,6 +115,7 @@ def edit_marcacao(request, id : int):
         'marcacoes/form.html',
         {'form' : formulario }
     )
+
 
 @login_required
 def delete_marcacao(request, id : int):

@@ -12,9 +12,11 @@
 <body class="container-fluid p-0">
     <header class="mb-2">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between px-1">
-          <div class="me-5">
-            <h1 class="text-center">DJANGO MARCAÇÕES</h1>
-          </div>
+          <a class="nav-link" href="/">
+            <div class="me-5">
+              <h1 class="text-center">DJANGO MARCAÇÕES</h1>
+            </div>
+          <a/>
 
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -85,6 +87,8 @@
 </body>
 <script src="{% static 'js/inputPreco.js' %}"></script>
 <script src="{% static 'js/inputCPF.js' %}"></script>
+<script src="{% static 'js/tableFilter.js' %}"></script>
+<script src="{% static 'js/onlyNumbers.js' %}"></script>
 <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
 
 </html>
