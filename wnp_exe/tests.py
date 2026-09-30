@@ -10,7 +10,7 @@ class TesteLogin(TestCase):
         resposta = self.client.get(reverse("login"))
         self.assertEqual(resposta.status_code, 200)
 
-        resposta = self.client.post(reverse("login"),{"username":"test","password":"123"})
+        resposta = self.client.post(reverse("login"),{"username":"test", "password":"123", "next":""})
         self.assertEqual(resposta.status_code, 302)
 
     def teste_redirect_if_logged_in(self):
@@ -18,4 +18,4 @@ class TesteLogin(TestCase):
         self.client.force_login(user)
 
         resposta = self.client.get(reverse("login"))
-        reposta = self.assertEqual(resposta.status_code, 302)
+        self.assertEqual(resposta.status_code, 302)

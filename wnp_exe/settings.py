@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'marcacoes.apps.MarcacoesConfig',
     'clientes.apps.ClientesConfig',
     'servicos.apps.ServicosConfig',
-    'django.forms'
 ]
 
 MIDDLEWARE = [
@@ -152,6 +151,3 @@ STORAGES = {
 CSRF_TRUSTED_ORIGINS = [
     os.getenv('CSRF_TRUSTED_ORIGIN'),
 ]
-
-#Diz ao django qual render usar
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
