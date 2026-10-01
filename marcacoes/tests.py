@@ -132,7 +132,7 @@ class TestMarcacao(TestCase):
         marcacao_editada.cliente.id = dados["cliente"]
 
 
-    def test_marcacao_edit_curta_deferenca_de_horario(self):
+    def test_marcacao_edit_curta_diferenca_de_horario(self):
         marcacao = Marcacao.objects.all().first()
         novahora = (marcacao.datahora + timedelta(minutes=15)).time()
 
@@ -151,12 +151,14 @@ class TestMarcacao(TestCase):
         marcacoes = Marcacao.objects.all()
         marcacao = marcacoes.first()
 
+        datahora_futura = marcacao.datahora + timedelta(minutes=90)
+
         if marcacao is None:
             raise Exception("CPF da cliente ana foi alterado")
         else:
             dados = {
-                "date": marcacao.datahora.strftime("%Y-%m-%d"),
-                "hora": (marcacao.datahora + timedelta(minutes=90)).strftime("%H:%M"),
+                "date": datahora_futura.strftime("%Y-%m-%d"),
+                "hora": datahora_futura.strftime("%H:%M"),
                 "cliente": marcacao.cliente.id,
                 "servico": marcacao.servico.id
             }

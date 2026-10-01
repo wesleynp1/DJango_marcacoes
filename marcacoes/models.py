@@ -54,3 +54,20 @@ class Marcacao(models.Model):
                     f" de { timezone.localtime(marcacao_conflitante.datahora).strftime('%H:%M %d/%m/%Y')}"
                     f" até {timezone.localtime(fim_marcacao_conflitante).strftime('%H:%M %d/%m/%Y')}"
                 )
+
+    def formataMarcacoesParaExibir(marcacoes):
+            for marcacao in marcacoes:
+                marcacao.cliente.nome = marcacao.cliente.nome.title()
+    
+                #separa data e hora para exibição
+                marcacao.datahora = timezone.localtime(marcacao.datahora)
+    
+                marcacao.data_inicio = marcacao.datahora.strftime('%d/%m/%Y')
+                marcacao.hora_inicio = marcacao.datahora.strftime('%H:%M')
+    
+                marcacao.duracao = marcacao.servico.duracao
+    
+                marcacao.data_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%d/%m/%Y')
+                marcacao.hora_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%H:%M')
+    
+    

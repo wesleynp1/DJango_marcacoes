@@ -8,33 +8,23 @@ from django.utils import timezone
 from marcacoes.models import  Marcacao
 from clientes.models import Cliente
 from servicos.models import Servico
-from .form import MarcacaoForm
+from .forms import MarcacaoForm
 
 # Create your views here.
 @login_required
 def index(request):
-    marcacoes = Marcacao.objects.all().order_by("-datahora")
+    marcacoes_futuras  = Marcacao.objects.filter(datahora__gte=timezone.now()).order_by("datahora")
+    marcacoes_passadas = Marcacao.objects.filter(datahora__lt=timezone.now()).order_by("-datahora")
 
-    for marcacao in marcacoes:
-        marcacao.cliente.nome = marcacao.cliente.nome.title()
-
-        #separa data e hora para exibição
-        marcacao.datahora = timezone.localtime(marcacao.datahora)
-
-        marcacao.data_inicio = marcacao.datahora.strftime('%d/%m/%Y')
-        marcacao.hora_inicio = marcacao.datahora.strftime('%H:%M')
-
-        marcacao.duracao = marcacao.servico.duracao
-
-        marcacao.data_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%d/%m/%Y')
-        marcacao.hora_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%H:%M')
-
+    Marcacao.formataMarcacoesParaExibir(marcacoes_passadas)
+    Marcacao.formataMarcacoesParaExibir(marcacoes_futuras)
 
     return render(
         request,
         'marcacoes/index.html',
         {
-            "marcacoes": marcacoes,
+            "marcacoes_futuras"  : marcacoes_futuras,
+            "marcacoes_passadas" : marcacoes_passadas,
             "agora" : timezone.now()
         }
     )
