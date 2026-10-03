@@ -92,6 +92,19 @@
     </div>
 
     <h2>MARCAÇÕES PASSADAS</h2>
+    <p>
+        Páginas:
+        {% for pag in range_de_paginas %}
+            {% if pag == pagina_atual  %}
+                <span class="btn btn-warning">{{ pag }}</span>
+            {% else %}
+                <a class="btn btn-primary" href="?pagina={{pag}}">{{ pag }}</a>
+            {% endif %}
+        {% endfor %}
+        
+    </p>
+
+
     <div class="overflow-scroll">
         <table  class="table table-dark" id="table_marcacoes">
             <thead>
