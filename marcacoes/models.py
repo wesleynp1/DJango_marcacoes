@@ -69,5 +69,15 @@ class Marcacao(models.Model):
     
                 marcacao.data_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%d/%m/%Y')
                 marcacao.hora_fim = (marcacao.datahora + timedelta(minutes=marcacao.duracao)).strftime('%H:%M')
-    
-    
+                
+    def diaDaSemana(self):
+        DIAS_DA_SEMANA = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo")
+        hoje = timezone.now().date()
+        if self.datahora.date() == hoje:    
+            return "hoje"
+        elif self.datahora.date() == hoje+timedelta(days=1):
+            return "amanhã"
+        elif self.datahora.date() == hoje+timedelta(days=2):
+            return "depois de amanhã"
+        else:
+            return DIAS_DA_SEMANA[self.datahora.weekday()]

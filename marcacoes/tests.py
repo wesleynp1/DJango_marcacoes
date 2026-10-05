@@ -167,3 +167,15 @@ class TestMarcacao(TestCase):
 
             self.assertEqual(resposta.status_code, 200)
             self.assertContains(resposta, "form")
+
+    def test_funcao_dia_da_semana_de_marcacoes(self):
+        marcacao = Marcacao()
+
+        marcacao.datahora = timezone.now()
+        self.assertEqual(marcacao.diaDaSemana(), "hoje")
+
+        marcacao.datahora = marcacao.datahora + timedelta(days=1)
+        self.assertEqual(marcacao.diaDaSemana(), "amanhã")
+
+        marcacao.datahora = marcacao.datahora + timedelta(days=1)
+        self.assertEqual(marcacao.diaDaSemana(), "depois de amanhã")

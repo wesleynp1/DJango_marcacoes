@@ -20,151 +20,165 @@
         </a> 
     </div>
 
-    <div class="d-flex mx-4 my-2">        
-        <svg width="38px" height="38px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>            
-        <input type="text" class="form-control table-filter" id="searchInput" data-target="table_marcacoes" placeholder="Digite para filtrar...">
-    </div>
+    <div id="marcacoes-futuras">
 
-    <h2>MARCAÇÕES FUTURAS</h2>
-    <div class="overflow-scroll">
-        <table  class="table table-dark" id="table_marcacoes">
-            <thead>
-                <tr>
-                    <th>INICIO</th>
-                    <th>FIM</th>
-                    <th>DURAÇÃO</th>
-                    <th>CLIENTE</th>
-                    <th>SERVIÇOS</th>
-                    <th>DELETE</th>
-                    <th>EDITAR</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for marcacao in marcacoes_futuras %}
-                    <tr>
-                        <td>
-                            {{ marcacao.data_inicio }}<br>
-                            {{ marcacao.hora_inicio }}
-                        </td>
-                        <td>
-                            {{ marcacao.data_fim }}<br>
-                            {{ marcacao.hora_fim }}
-                        </td>
-                        <td>{{ marcacao.duracao }} min.</td>
-                        <td>{{ marcacao.cliente.nome }}</td>
-                        <td>{{ marcacao.servico.nome }}</td>
-                        <td> 
-                            <a href="{% url 'marcacoes:delete' marcacao.id %}" class="btn btn-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg>
-                            </a> 
-                        </td>
-                        <td> 
-                            <a href="{% url 'marcacoes:edit' marcacao.id %}" class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                </svg>
-                            </a> 
-                        </td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="7"> 
-                        <a href="{%  url 'marcacoes:add' %}" class="btn btn-primary fw-bolder">
-                            <svg class="bi bi-calendar-event" width="16" height="16" fill="currentColor" version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <path d="m7.8229 8.8431a0.35559 0.37668 0 0 1 0.35559-0.37668h0.71117a0.35559 0.37668 0 0 1 0.35559 0.37668v0.75336a0.35559 0.37668 0 0 1-0.35559 0.37668h-0.71117a0.35559 0.37668 0 0 1-0.35559-0.37668z" stroke-width=".73196"/>
-                                <path d="m2.4891 3.9463a0.35559 0.37668 0 0 1 0.35559 0.37668v0.37668h5.6894v-0.37668a0.35559 0.37668 0 0 1 0.71117 0v0.37668h0.71117a1.4223 1.5067 0 0 1 1.4223 1.5067v8.287a1.4223 1.5067 0 0 1-1.4223 1.5067h-8.534a1.4223 1.5067 0 0 1-1.4223-1.5067v-8.287a1.4223 1.5067 0 0 1 1.4223-1.5067h0.71117v-0.37668a0.35559 0.37668 0 0 1 0.35559-0.37668m-1.7779 3.0134v7.5336a0.71117 0.75336 0 0 0 0.71117 0.75336h8.534a0.71117 0.75336 0 0 0 0.71117-0.75336v-7.5336z" stroke-width=".73196"/>
-                                <rect x="9.5999" y="2.8791" width="6.1238" height="1.3208"/>
-                                <rect transform="rotate(90.054)" x=".49626" y="-13.382" width="6.1238" height="1.3213" stroke-width="1.0002"/>
-                            </svg> 
-
-                            NOVA MARCAÇÃO
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <h2>MARCAÇÕES PASSADAS</h2>
-    <p>
-        Páginas:
-        {% for pag in range_de_paginas %}
-            {% if pag == pagina_atual  %}
-                <span class="btn btn-warning">{{ pag }}</span>
-            {% else %}
-                <a class="btn btn-primary" href="?pagina={{pag}}">{{ pag }}</a>
-            {% endif %}
-        {% endfor %}
+        <h2>MARCAÇÕES FUTURAS</h2>
         
-    </p>
+        <div class="d-flex mx-4 my-2">        
+            <svg width="38px" height="38px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>            
+            <input type="text" class="form-control table-filter" id="searchInput" data-target="table_marcacoes_futuras" placeholder="Digite para filtrar...">
+        </div>
 
-
-    <div class="overflow-scroll">
-        <table  class="table table-dark" id="table_marcacoes">
-            <thead>
-                <tr>
-                    <th>INICIO</th>
-                    <th>FIM</th>
-                    <th>DURAÇÃO</th>
-                    <th>CLIENTE</th>
-                    <th>SERVIÇOS</th>
-                    <th>DELETE</th>
-                    <th>EDITAR</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for marcacao in marcacoes_passadas %}
+        <div class="overflow-scroll">
+            <table  class="table table-dark" id="table_marcacoes_futuras">
+                <thead>
                     <tr>
-                        <td>
-                            {{ marcacao.data_inicio }}<br>
-                            {{ marcacao.hora_inicio }}
-                        </td>
-                        <td>
-                            {{ marcacao.data_fim }}<br>
-                            {{ marcacao.hora_fim }}
-                        </td>
-                        <td>{{ marcacao.duracao }} min.</td>
-                        <td>{{ marcacao.cliente.nome }}</td>
-                        <td>{{ marcacao.servico.nome }}</td>
-                        <td> 
-                            <a href="{% url 'marcacoes:delete' marcacao.id %}" class="btn btn-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg>
-                            </a> 
-                        </td>
-                        <td> 
-                            <a href="{% url 'marcacoes:edit' marcacao.id %}" class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                </svg>
-                            </a> 
+                        <th>INICIO</th>
+                        <th>FIM</th>
+                        <th>DURAÇÃO</th>
+                        <th>CLIENTE</th>
+                        <th>SERVIÇOS</th>
+                        <th>DELETE</th>
+                        <th>EDITAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for marcacao in marcacoes_futuras %}
+                        <tr>
+                            <td>
+                                {{ marcacao.diaDaSemana }}<br>
+                                {{ marcacao.data_inicio }}<br>
+                                {{ marcacao.hora_inicio }}
+                            </td>
+                            <td>
+                                {{ marcacao.data_fim }}<br>
+                                {{ marcacao.hora_fim }}
+                            </td>
+                            <td>{{ marcacao.duracao }} min.</td>
+                            <td>{{ marcacao.cliente.nome }}</td>
+                            <td>{{ marcacao.servico.nome }}</td>
+                            <td> 
+                                <a href="{% url 'marcacoes:delete' marcacao.id %}" class="btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                    </svg>
+                                </a> 
+                            </td>
+                            <td> 
+                                <a href="{% url 'marcacoes:edit' marcacao.id %}" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                    </svg>
+                                </a> 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="7"> 
+                            <a href="{%  url 'marcacoes:add' %}" class="btn btn-primary fw-bolder">
+                                <svg class="bi bi-calendar-event" width="16" height="16" fill="currentColor" version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m7.8229 8.8431a0.35559 0.37668 0 0 1 0.35559-0.37668h0.71117a0.35559 0.37668 0 0 1 0.35559 0.37668v0.75336a0.35559 0.37668 0 0 1-0.35559 0.37668h-0.71117a0.35559 0.37668 0 0 1-0.35559-0.37668z" stroke-width=".73196"/>
+                                    <path d="m2.4891 3.9463a0.35559 0.37668 0 0 1 0.35559 0.37668v0.37668h5.6894v-0.37668a0.35559 0.37668 0 0 1 0.71117 0v0.37668h0.71117a1.4223 1.5067 0 0 1 1.4223 1.5067v8.287a1.4223 1.5067 0 0 1-1.4223 1.5067h-8.534a1.4223 1.5067 0 0 1-1.4223-1.5067v-8.287a1.4223 1.5067 0 0 1 1.4223-1.5067h0.71117v-0.37668a0.35559 0.37668 0 0 1 0.35559-0.37668m-1.7779 3.0134v7.5336a0.71117 0.75336 0 0 0 0.71117 0.75336h8.534a0.71117 0.75336 0 0 0 0.71117-0.75336v-7.5336z" stroke-width=".73196"/>
+                                    <rect x="9.5999" y="2.8791" width="6.1238" height="1.3208"/>
+                                    <rect transform="rotate(90.054)" x=".49626" y="-13.382" width="6.1238" height="1.3213" stroke-width="1.0002"/>
+                                </svg> 
+
+                                NOVA MARCAÇÃO
+                            </a>
                         </td>
                     </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="7"> 
-                        <a href="{%  url 'marcacoes:add' %}" class="btn btn-primary fw-bolder">
-                            <svg class="bi bi-calendar-event" width="16" height="16" fill="currentColor" version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <path d="m7.8229 8.8431a0.35559 0.37668 0 0 1 0.35559-0.37668h0.71117a0.35559 0.37668 0 0 1 0.35559 0.37668v0.75336a0.35559 0.37668 0 0 1-0.35559 0.37668h-0.71117a0.35559 0.37668 0 0 1-0.35559-0.37668z" stroke-width=".73196"/>
-                                <path d="m2.4891 3.9463a0.35559 0.37668 0 0 1 0.35559 0.37668v0.37668h5.6894v-0.37668a0.35559 0.37668 0 0 1 0.71117 0v0.37668h0.71117a1.4223 1.5067 0 0 1 1.4223 1.5067v8.287a1.4223 1.5067 0 0 1-1.4223 1.5067h-8.534a1.4223 1.5067 0 0 1-1.4223-1.5067v-8.287a1.4223 1.5067 0 0 1 1.4223-1.5067h0.71117v-0.37668a0.35559 0.37668 0 0 1 0.35559-0.37668m-1.7779 3.0134v7.5336a0.71117 0.75336 0 0 0 0.71117 0.75336h8.534a0.71117 0.75336 0 0 0 0.71117-0.75336v-7.5336z" stroke-width=".73196"/>
-                                <rect x="9.5999" y="2.8791" width="6.1238" height="1.3208"/>
-                                <rect transform="rotate(90.054)" x=".49626" y="-13.382" width="6.1238" height="1.3213" stroke-width="1.0002"/>
-                            </svg> 
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                            NOVA MARCAÇÃO
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="marcacoes-passadas" class="mt-4">
+        <h2>MARCAÇÕES PASSADAS</h2>
+        <p>
+            Páginas:
+            {% for pag in range_de_paginas %}
+                {% if pag == pagina_atual  %}
+                    <span class="btn btn-warning">{{ pag }}</span>
+                {% else %}
+                    <a class="btn btn-primary" href="?pagina={{pag}}">{{ pag }}</a>
+                {% endif %}
+            {% endfor %}
+            
+        </p>
+
+        <div class="d-flex mx-4 my-2">        
+            <svg width="38px" height="38px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L14.4686 13.5314C14.2957 13.7043 14.2092 13.7908 14.1474 13.8917C14.0925 13.9812 14.0521 14.0787 14.0276 14.1808C14 14.2959 14 14.4182 14 14.6627V17L10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>            
+            <input type="text" class="form-control table-filter" id="searchInput" data-target="table_marcacoes_passadas" placeholder="Digite para filtrar...">
+        </div>
+
+        <div class="overflow-scroll">
+            <table  class="table table-dark" id="table_marcacoes_passadas">
+                <thead>
+                    <tr>
+                        <th>INICIO</th>
+                        <th>FIM</th>
+                        <th>DURAÇÃO</th>
+                        <th>CLIENTE</th>
+                        <th>SERVIÇOS</th>
+                        <th>DELETE</th>
+                        <th>EDITAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for marcacao in marcacoes_passadas %}
+                        <tr>
+                            <td>
+                                {{ marcacao.diaDaSemana }}<br>
+                                {{ marcacao.data_inicio }}<br>
+                                {{ marcacao.hora_inicio }}
+                            </td>
+                            <td>
+                                {{ marcacao.data_fim }}<br>
+                                {{ marcacao.hora_fim }}
+                            </td>
+                            <td>{{ marcacao.duracao }} min.</td>
+                            <td>{{ marcacao.cliente.nome }}</td>
+                            <td>{{ marcacao.servico.nome }}</td>
+                            <td> 
+                                <a href="{% url 'marcacoes:delete' marcacao.id %}" class="btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                    </svg>
+                                </a> 
+                            </td>
+                            <td> 
+                                <a href="{% url 'marcacoes:edit' marcacao.id %}" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                    </svg>
+                                </a> 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="7"> 
+                            <a href="{%  url 'marcacoes:add' %}" class="btn btn-primary fw-bolder">
+                                <svg class="bi bi-calendar-event" width="16" height="16" fill="currentColor" version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m7.8229 8.8431a0.35559 0.37668 0 0 1 0.35559-0.37668h0.71117a0.35559 0.37668 0 0 1 0.35559 0.37668v0.75336a0.35559 0.37668 0 0 1-0.35559 0.37668h-0.71117a0.35559 0.37668 0 0 1-0.35559-0.37668z" stroke-width=".73196"/>
+                                    <path d="m2.4891 3.9463a0.35559 0.37668 0 0 1 0.35559 0.37668v0.37668h5.6894v-0.37668a0.35559 0.37668 0 0 1 0.71117 0v0.37668h0.71117a1.4223 1.5067 0 0 1 1.4223 1.5067v8.287a1.4223 1.5067 0 0 1-1.4223 1.5067h-8.534a1.4223 1.5067 0 0 1-1.4223-1.5067v-8.287a1.4223 1.5067 0 0 1 1.4223-1.5067h0.71117v-0.37668a0.35559 0.37668 0 0 1 0.35559-0.37668m-1.7779 3.0134v7.5336a0.71117 0.75336 0 0 0 0.71117 0.75336h8.534a0.71117 0.75336 0 0 0 0.71117-0.75336v-7.5336z" stroke-width=".73196"/>
+                                    <rect x="9.5999" y="2.8791" width="6.1238" height="1.3208"/>
+                                    <rect transform="rotate(90.054)" x=".49626" y="-13.382" width="6.1238" height="1.3213" stroke-width="1.0002"/>
+                                </svg> 
+
+                                NOVA MARCAÇÃO
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
